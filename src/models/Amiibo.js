@@ -1,4 +1,4 @@
-class Amiibo {
+export default class Amiibo {
     /**
      * @type {string}
      */
@@ -55,7 +55,8 @@ class Amiibo {
      * @param {string} tail
      * @param {string} type
      */
-    constructor({amiiboSeries,
+    constructor({
+                    amiiboSeries,
                     character,
                     gameSeries,
                     head,
@@ -64,7 +65,7 @@ class Amiibo {
                     release,
                     tail,
                     type
-    }) {
+                }) {
         this.amiiboSeries = amiiboSeries;
         this.character = character;
         this.gameSeries = gameSeries;

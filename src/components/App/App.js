@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useReducer} from 'react';
+import styles from './App.module.css';
+import MainPage from "../MainPage/MainPage";
+import AppContext from "./../../contexts/AppContext";
+import amiibos from './../../data/amiibos.json';
+import Amiibo from './../../models/Amiibo';
+
+const appState = {
+    amiibos: amiibos.map(a=> new Amiibo(a)),
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'lalala':
+            return ({...state})
+        default:
+            return 'Error';
+    }
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [state, dispatch] = useReducer(reducer, appState);
+
+    return (
+        <AppContext.Provider value={{...state, dispatch}}>
+            <div className={styles.app}>
+                <MainPage />
+            </div>
+        </AppContext.Provider>
+    );
 }
 
 export default App;
