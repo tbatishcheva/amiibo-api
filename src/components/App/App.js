@@ -2,12 +2,10 @@ import React, {useReducer} from 'react';
 import styles from './App.module.css';
 import MainPage from "../MainPage/MainPage";
 import AppContext from "./../../contexts/AppContext";
-import amiibos from './../../data/amiibos.json';
-import Amiibo from './../../models/Amiibo';
 import {CHANGE_AMIIBOS} from "./../../constants/actionTypes";
 
 const appState = {
-    amiibos: amiibos.map(a=> new Amiibo(a)),
+    amiibos: [],
 }
 
 const reducer = (state, action) => {

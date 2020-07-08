@@ -1,0 +1,17 @@
+.button {
+    margin: 0;
+    padding: 8px 16px;
+    background-color: white;
+    font-weight: 500;
+    border: thin solid rgba(0, 0, 0, .12);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, .2), 0 0 0 0 rgba(0, 0, 0, .14), 0 0 0 0 rgba(0, 0, 0, .12);
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+}
+
+@media (hover: hover) {
+    .button:hover {
+        filter: brightness(90%);
+    }
+}

@@ -1,0 +1,6 @@
+.amiiboList {
+    padding: 50px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(auto-fill, 300px);
+}

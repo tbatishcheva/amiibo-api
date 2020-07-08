@@ -1,3 +1,48 @@
 .amiiboItem {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    justify-content: space-between;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.img img {
+    display: block;
+    width: 100%;
+}
+
+.content {
     padding: 20px;
+}
+
+.name {
+    padding: 0 0 8px 0;
+}
+
+.series {
+    font-weight: 500;
+    padding: 0 0 4px 0;
+}
+
+.character {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0 0 4px 0;
+    color: midnightblue;
+}
+
+.type {
+    padding: 0 0 4px 0;
+}
+
+.tail {
+    padding: 0 0 4px 0;
+    font-size: 14px;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 0 0 0;
 }

@@ -1,10 +1,10 @@
 import React, {useCallback, useContext, useEffect} from 'react';
 import styles from './MainPage.module.css';
-import AmiiboItem from "./../../components/AmiiboItem/AmiiboItem";
 import AmiiboApi from "./../../API/AmiiboApi";
 import Amiibo from "./../../models/Amiibo";
 import AppContext from "./../../contexts/AppContext";
 import {CHANGE_AMIIBOS} from "./../../constants/actionTypes";
+import AmiiboList from "./../../components/AmiiboList/AmiiboList";
 
 function MainPage() {
     const {amiibos, dispatch} = useContext(AppContext);
@@ -27,9 +27,13 @@ function MainPage() {
         },
         [amiibos, amiiboApi, changeAmiibos]);
 
+    if (!amiibos || amiibos.length === 0) {
+        return null;
+    }
+
     return (
         <div className={styles.mainPage}>
-            {amiibos.map(a => <AmiiboItem key={a.tail} amiibo={a}/>)}
+            <AmiiboList amiibos={amiibos}/>
         </div>
     );
 }
