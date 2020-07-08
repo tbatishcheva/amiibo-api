@@ -4,6 +4,7 @@ import MainPage from "../MainPage/MainPage";
 import AppContext from "./../../contexts/AppContext";
 import amiibos from './../../data/amiibos.json';
 import Amiibo from './../../models/Amiibo';
+import {CHANGE_AMIIBOS} from "./../../constants/actionTypes";
 
 const appState = {
     amiibos: amiibos.map(a=> new Amiibo(a)),
@@ -13,6 +14,8 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'lalala':
             return ({...state})
+        case CHANGE_AMIIBOS:
+            return ({...state, amiibos: action.amiibos})
         default:
             return 'Error';
     }

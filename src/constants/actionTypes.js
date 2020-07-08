@@ -1,0 +1,1 @@
+export const CHANGE_AMIIBOS = 'CHANGE_AMIIBOS';

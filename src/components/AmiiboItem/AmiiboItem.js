@@ -10,7 +10,14 @@ AmiiboItem.propTypes = {
 function AmiiboItem({amiibo}) {
     return (
         <div className={styles.amiiboItem}>
-            {amiibo.tail}
+            <img alt="Amiibo" src={amiibo.image}/>
+            {/*{amiibo.tail} +*/}
+            {/*{amiibo.tail} +*/}
+            {/*{amiibo.name} **/}
+            {/*{amiibo.amiiboSeries} /*/}
+            {/*{amiibo.gameSeries} =*/}
+            {/*{amiibo.character} -*/}
+            {/*{amiibo.type} +*/}
         </div>
     );
 }
