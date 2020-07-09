@@ -2,10 +2,11 @@ import React, {useReducer} from 'react';
 import styles from './App.module.css';
 import MainPage from "../MainPage/MainPage";
 import AppContext from "./../../contexts/AppContext";
-import {CHANGE_AMIIBOS} from "./../../constants/actionTypes";
+import {CHANGE_AMIIBOS, CHANGE_GAMESERIES} from "./../../constants/actionTypes";
 
 const appState = {
     amiibos: [],
+    gameseries: ['Please Wait'],
 }
 
 const reducer = (state, action) => {
@@ -14,6 +15,8 @@ const reducer = (state, action) => {
             return ({...state})
         case CHANGE_AMIIBOS:
             return ({...state, amiibos: action.amiibos})
+        case CHANGE_GAMESERIES:
+            return ({...state, gameseries: action.gameseries})
         default:
             return 'Error';
     }
@@ -25,7 +28,7 @@ function App() {
     return (
         <AppContext.Provider value={{...state, dispatch}}>
             <div className={styles.app}>
-                <MainPage />
+                <MainPage/>
             </div>
         </AppContext.Provider>
     );
