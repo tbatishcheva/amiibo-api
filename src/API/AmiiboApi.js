@@ -1,13 +1,21 @@
 const MAIN_URL = 'https://www.amiiboapi.com/api/';
 
 export default class AmiiboApi {
-    fetchAmiibos() {
-        return fetch(`${MAIN_URL}amiibo/?amiiboSeries=Animal%20Crossing`)
-            .then(response => response.json());
+    fetchAmiiboSeries(amiiboSeries) {
+        return fetch(`${MAIN_URL}amiibo/?amiiboSeries=${amiiboSeries}`)
+            .then(response => response.json())
+            .catch();
+    }
+
+    fetchGameAmiiboSeries(gameseries) {
+        return fetch(`${MAIN_URL}amiibo/?gameseries=${gameseries}`)
+            .then(response => response.json())
+            .catch();
     }
 
     fetchGameSeries() {
         return fetch(`${MAIN_URL}gameseries`)
-            .then(response => response.json());
+            .then(response => response.json())
+            .catch();
     }
 }

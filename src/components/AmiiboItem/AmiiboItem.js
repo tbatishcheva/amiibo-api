@@ -22,15 +22,17 @@ function AmiiboItem({amiibo}) {
                 <div className={styles.name}>
                     {amiibo.name}
                 </div>
-                <div className={styles.series}>
-                    {amiibo.amiiboSeries}/
-                    {amiibo.gameSeries}
+                <div className={styles.amiiboSeries}>
+                    Amiibo Series: {amiibo.amiiboSeries}
+                </div>
+                <div className={styles.gameSeries}>
+                    Game Series: {amiibo.gameSeries}
                 </div>
                 <div className={styles.type}>
-                    {amiibo.type}
+                    Type: {amiibo.type}
                 </div>
                 <div className={styles.tail}>
-                    {amiibo.tail}
+                    Tail: {amiibo.tail}
                 </div>
                 <div className={styles.controls}>
                     <Button>Like</Button>

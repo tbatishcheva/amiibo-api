@@ -2,21 +2,22 @@ import React, {useReducer} from 'react';
 import styles from './App.module.css';
 import MainPage from "../MainPage/MainPage";
 import AppContext from "./../../contexts/AppContext";
-import {CHANGE_AMIIBOS, CHANGE_GAMESERIES} from "./../../constants/actionTypes";
+import {CHANGE_ACTIVE_GAMESERIES, CHANGE_AMIIBOS, CHANGE_GAMESERIES} from "./../../constants/actionTypes";
 
 const appState = {
     amiibos: [],
     gameseries: ['Please Wait'],
+    activeGameseries: '',
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'lalala':
-            return ({...state})
         case CHANGE_AMIIBOS:
             return ({...state, amiibos: action.amiibos})
         case CHANGE_GAMESERIES:
             return ({...state, gameseries: action.gameseries})
+        case CHANGE_ACTIVE_GAMESERIES:
+            return ({...state, activeGameseries: action.activeGameseries})
         default:
             return 'Error';
     }
