@@ -2,12 +2,19 @@ import React, {useReducer} from 'react';
 import styles from './App.module.css';
 import MainPage from "../MainPage/MainPage";
 import AppContext from "./../../contexts/AppContext";
-import {CHANGE_ACTIVE_GAMESERIES, CHANGE_AMIIBOS, CHANGE_GAMESERIES} from "./../../constants/actionTypes";
+import {
+    CHANGE_ACTIVE_CHARACTER,
+    CHANGE_ACTIVE_GAMESERIES,
+    CHANGE_AMIIBOS, CHANGE_CHARACTERS,
+    CHANGE_GAMESERIES
+} from "./../../constants/actionTypes";
 
 const appState = {
     amiibos: [],
-    gameseries: ['Please Wait'],
-    activeGameseries: '',
+    gameseries: [],
+    activeGameseries: 'Super Mario',
+    characters: [],
+    activeCharacter: '',
 }
 
 const reducer = (state, action) => {
@@ -18,6 +25,10 @@ const reducer = (state, action) => {
             return ({...state, gameseries: action.gameseries})
         case CHANGE_ACTIVE_GAMESERIES:
             return ({...state, activeGameseries: action.activeGameseries})
+        case CHANGE_CHARACTERS:
+            return ({...state, characters: action.characters})
+        case CHANGE_ACTIVE_CHARACTER:
+            return ({...state, activeCharacter: action.activeCharacter})
         default:
             return 'Error';
     }

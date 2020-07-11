@@ -1,0 +1,9 @@
+.select{
+    border: thin solid transparent;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    padding: 10px 50px 10px 10px;
+    outline: none;
+    font-size: 16px;
+
+}

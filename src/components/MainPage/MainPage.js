@@ -3,23 +3,17 @@ import styles from './MainPage.module.css';
 import AmiiboApi from "./../../API/AmiiboApi";
 import Amiibo from "./../../models/Amiibo";
 import AppContext from "./../../contexts/AppContext";
-import {CHANGE_ACTIVE_GAMESERIES, CHANGE_AMIIBOS, CHANGE_GAMESERIES} from "./../../constants/actionTypes";
+import {
+    CHANGE_AMIIBOS,
+    CHANGE_GAMESERIES,
+    CHANGE_CHARACTERS
+} from "./../../constants/actionTypes";
 import AmiiboList from "./../../components/AmiiboList/AmiiboList";
 import Filters from "./../../components/Filters/Filters";
 
 function MainPage() {
-    const {amiibos, dispatch, gameseries, activeGameseries} = useContext(AppContext);
+    const {amiibos, dispatch, activeGameseries, activeCharacter} = useContext(AppContext);
     const amiiboApi = new AmiiboApi();
-
-    const handleSelectGameseriesChange = useCallback(
-        (e) => {
-            dispatch({
-                type: CHANGE_ACTIVE_GAMESERIES,
-                activeGameseries: e.currentTarget.value,
-            })
-        },
-        [dispatch]);
-
 
     const changeAmiibos = useCallback((amiibosRes) => {
             dispatch({
@@ -36,19 +30,24 @@ function MainPage() {
             })
         },
         [dispatch]);
+    const changeCharacters = useCallback((characters) => {
+            dispatch({
+                type: CHANGE_CHARACTERS,
+                characters: characters,
+            })
+        },
+        [dispatch]);
 
     useEffect(
         () => {
-            if (activeGameseries !== '') {
-                amiiboApi.fetchGameAmiiboSeries(activeGameseries).then(res => {
-                    const amiibosRes = res.amiibo ? res.amiibo.map(r => new Amiibo(r)) : [];
-                    if (!amiibosRes || amiibosRes.length === 0) {
-                        return;
-                    }
+            amiiboApi.fetchAmiibos().then(res => {
+                const amiibosRes = res.amiibo ? res.amiibo.map(r => new Amiibo(r)) : [];
+                if (!amiibosRes || amiibosRes.length === 0) {
+                    return;
+                }
 
-                    changeAmiibos(amiibosRes);
-                });
-            }
+                changeAmiibos(amiibosRes);
+            });
 
             amiiboApi.fetchGameSeries().then(res => {
                 const gameseries = res.amiibo.map(g => g.name);
@@ -59,16 +58,34 @@ function MainPage() {
                 const amiibosRes = [...new Set(gameseries)];
                 changeGameseries(amiibosRes);
             })
+
+            amiiboApi.fetchCharacters().then(res => {
+                const characters = res.amiibo.map(g => g.name);
+                if (!characters || characters.length === 0) {
+                    return;
+                }
+
+                const amiibosRes = [...new Set(characters)];
+                changeCharacters(amiibosRes);
+            })
         },
-        [amiibos, amiiboApi, changeAmiibos, changeGameseries, activeGameseries]);
+        [
+            amiibos,
+            amiiboApi,
+            changeAmiibos,
+            changeGameseries,
+            activeGameseries,
+            activeCharacter,
+            changeCharacters
+        ]);
 
     return (
         <div className={styles.mainPage}>
             <header className={styles.header}>
                 Amiibos
             </header>
-            <Filters gameseries={gameseries} onChange={handleSelectGameseriesChange}/>
-            <AmiiboList amiibos={amiibos}/>
+            <Filters/>
+            <AmiiboList/>
         </div>
     );
 }
