@@ -56,24 +56,24 @@ export default class Amiibo {
      * @param {string} type
      */
     constructor({
-                    amiiboSeries,
-                    character,
-                    gameSeries,
-                    head,
-                    image,
-                    name,
-                    release,
-                    tail,
-                    type
-                }) {
-        this.amiiboSeries = amiiboSeries;
-        this.character = character;
-        this.gameSeries = gameSeries;
-        this.head = head;
-        this.image = image;
-        this.name = name;
-        this.release = release;
-        this.tail = tail;
-        this.type = type;
+      amiiboSeries,
+      character,
+      gameSeries,
+      head,
+      image,
+      name,
+      release,
+      tail,
+      type,
+    }) {
+      this.amiiboSeries = amiiboSeries;
+      this.character = character;
+      this.gameSeries = gameSeries;
+      this.head = head;
+      this.image = image;
+      this.name = name;
+      this.release = release;
+      this.tail = tail;
+      this.type = type;
     }
 }

@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
+import AppContext from '../../contexts/AppContext';
 import Amiibo from '../../models/Amiibo';
 import styles from './AmiiboItem.module.css';
 import Button from '../Button/Button';
+import { TOGGLE_LIKE } from '../../constants/actionTypes';
 
 AmiiboItem.propTypes = {
   amiibo: PropTypes.instanceOf(Amiibo).isRequired,
 };
 
 function AmiiboItem({ amiibo }) {
+  const { dispatch } = useContext(AppContext);
+
+  const handleOnLikeClick = useCallback(() => {
+    dispatch({
+      type: TOGGLE_LIKE,
+      amiibo,
+    });
+  }, [dispatch, amiibo]);
+
   return (
     <div className={styles.amiiboItem}>
       <div className={styles.img}>
@@ -35,7 +46,7 @@ function AmiiboItem({ amiibo }) {
           Tail: {amiibo.tail}
         </div>
         <div className={styles.controls}>
-          <Button>Like</Button>
+          <Button onClick={handleOnLikeClick}>Like</Button>
         </div>
         {/* {amiibo.release} +*/}
       </div>

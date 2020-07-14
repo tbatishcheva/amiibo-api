@@ -1,8 +1,5 @@
-import React, {
-  useCallback, useContext, useEffect,
-} from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import styles from './MainPage.module.css';
-import Amiibo from '../../models/Amiibo';
 import AppContext from '../../contexts/AppContext';
 import {
   CHANGE_AMIIBOS,
@@ -20,17 +17,15 @@ function MainPage() {
     amiiboApi,
   } = useContext(AppContext);
 
-  // useRef
-  // const amiiboApi = new AmiiboApi();
+  // todo add useRef for const amiiboApi = new AmiiboApi();
 
   const changeAmiibos = useCallback((amiibosRes) => {
     dispatch({
       type: CHANGE_AMIIBOS,
-      amiibos: amiibosRes,
+      amiibosRes,
     });
   },
   [dispatch]);
-
   const changeGameseries = useCallback((gameseriesRes) => {
     dispatch({
       type: CHANGE_GAMESERIES,
@@ -49,38 +44,17 @@ function MainPage() {
   useEffect(() => {
     const activeKeys = Object.keys(activeParams);
     const params = activeKeys.map((ak) => `${ak}=${activeParams[ak]}`).join('&');
-    amiiboApi.fetchAmiibosByParams(params).then((res) => {
-      const amiibosRes = res.amiibo ? res.amiibo.map((r) => new Amiibo(r)) : [];
-      if (!amiibosRes || amiibosRes.length === 0) {
-        return;
-      }
-
-      changeAmiibos(amiibosRes);
-    });
+    amiiboApi.fetchAmiibosByParams(params).then((res) => changeAmiibos(res.amiibo));
   }, [amiiboApi, activeParams, changeAmiibos]);
-
   useEffect(() => {
     amiiboApi.fetchGameSeries().then((res) => {
-      const gameseriesRes = res.amiibo.map((g) => g.name);
-      if (!gameseriesRes || gameseriesRes.length === 0) {
-        return;
-      }
-
-      const amiibosRes = [...new Set(gameseriesRes)];
-      changeGameseries(amiibosRes);
+      changeGameseries(res.amiibo);
     });
   }, [amiiboApi, changeGameseries]);
-
   useEffect(
     () => {
       amiiboApi.fetchCharacters().then((res) => {
-        const charactersRes = res.amiibo.map((g) => g.name);
-        if (!charactersRes || charactersRes.length === 0) {
-          return;
-        }
-
-        const amiibosRes = [...new Set(charactersRes)];
-        changeCharacters(amiibosRes);
+        changeCharacters(res.amiibo);
       });
     },
     [amiiboApi, changeCharacters],

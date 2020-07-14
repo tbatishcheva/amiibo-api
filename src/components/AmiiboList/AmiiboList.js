@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import AmiiboItem from '../AmiiboItem/AmiiboItem';
 import styles from './AmiiboList.module.css';
 import Amiibo from '../../models/Amiibo';
