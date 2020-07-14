@@ -6,14 +6,17 @@ Select.propTypes = {
     title: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string),
     onChange: PropTypes.func,
+    selected: PropTypes.string.isRequired,
+    className: PropTypes.string,
 };
 
 Select.defaultProps = {
     options: null,
     onChange: null,
+    className: '',
 };
 
-function Select({title, options, onChange}) {
+function Select({title, options, onChange, selected, className}) {
     if (!options || options.length === 0) {
         return null;
     }
@@ -21,8 +24,15 @@ function Select({title, options, onChange}) {
     return (
         <>
             {title}
-            <select className={styles.select} onChange={onChange}>
-                {options.map(o => <option key={o}>{o}</option>)}
+            <select
+                className={`${styles.select} ${className}`}
+                onChange={onChange}
+                value={selected}
+            >
+                {options.map(o =>
+                    <option key={o}>
+                        {o}
+                    </option>)}
             </select>
         </>
     );

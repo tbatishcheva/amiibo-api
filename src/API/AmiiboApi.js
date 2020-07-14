@@ -7,18 +7,42 @@ export default class AmiiboApi {
             .catch();
     }
 
-    fetchAmiiboSeries(amiiboSeries) {
-        return fetch(`${MAIN_URL}amiibo/?amiiboSeries=${amiiboSeries}`)
+    /**
+     * @param {string} params
+     * @returns {Promise}
+     */
+    fetchAmiibosByParams(params) {
+        return fetch(`${MAIN_URL}amiibo/?${params}`)
             .then(response => response.json())
             .catch();
     }
 
+    /**
+     * @param {string} amiiboSeries
+     * @returns {Promise}
+     */
+    fetchAmiiboSeries(amiiboSeries) {
+        return fetch(
+            `${MAIN_URL}amiibo/?amiiboSeries=${amiiboSeries}`
+        )
+            .then(response => response.json())
+            .catch();
+    }
+
+    /**
+     * @param {string} gameseries
+     * @returns {Promise}
+     */
     fetchGameAmiiboSeries(gameseries) {
         return fetch(`${MAIN_URL}amiibo/?gameseries=${gameseries}`)
             .then(response => response.json())
             .catch();
     }
 
+    /**
+     * @param {string} character
+     * @returns {Promise}
+     */
     fetchAmiiboByCharacter(character) {
         return fetch(`${MAIN_URL}amiibo/?character=${character}`)
             .then(response => response.json())

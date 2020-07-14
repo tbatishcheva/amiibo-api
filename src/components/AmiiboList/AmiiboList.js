@@ -1,20 +1,23 @@
-import React, {useContext} from 'react';
-import AmiiboItem from "./../../components/AmiiboItem/AmiiboItem";
+import React from 'react';
+import PropTypes from 'prop-types';
+import AmiiboItem from '../AmiiboItem/AmiiboItem';
 import styles from './AmiiboList.module.css';
-import AppContext from '../../contexts/AppContext';
+import Amiibo from '../../models/Amiibo';
 
-function AmiiboList() {
-    const {amiibos} = useContext(AppContext);
+AmiiboList.propTypes = {
+  amiibos: PropTypes.arrayOf(PropTypes.instanceOf(Amiibo)).isRequired,
+};
 
-    if (!amiibos || amiibos.length === 0) {
-        return null;
-    }
+function AmiiboList({ amiibos }) {
+  if (!amiibos || amiibos.length === 0) {
+    return null;
+  }
 
-    return (
-        <div className={styles.amiiboList}>
-            {amiibos.map(a => <AmiiboItem key={a.tail} amiibo={a}/>)}
-        </div>
-    );
+  return (
+    <div className={styles.amiiboList}>
+      {amiibos.map((a) => <AmiiboItem key={a.tail} amiibo={a} />)}
+    </div>
+  );
 }
 
 export default AmiiboList;
