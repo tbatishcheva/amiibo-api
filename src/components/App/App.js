@@ -1,36 +1,38 @@
 import React, { useReducer } from 'react';
-import toggleArrayElement from '../../helpers/toggleArrayElement';
-import Amiibo from '../../models/Amiibo';
-import styles from './App.module.css';
-import MainPage from '../MainPage/MainPage';
-import AppContext from '../../contexts/AppContext';
 import {
-  CHANGE_ACTIVE_CHARACTER,
-  CHANGE_ACTIVE_GAMESERIES,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import {
+  CHANGE_LIKED_AMIIBOS,
   CHANGE_AMIIBOS, CHANGE_CHARACTERS,
   CHANGE_GAMESERIES,
   TOGGLE_LIKE,
 } from '../../constants/actionTypes';
-import AmiiboApi from '../../API/AmiiboApi';
+import toggleArrayElement from '../../helpers/toggleArrayElement';
+import Amiibo from '../../models/Amiibo';
+import MainPage from '../MainPage/MainPage';
+import AppContext from '../../contexts/AppContext';
 
-// todo add filters store
-// todo -> filters store
-// todo follow to inside params
-const activeParams = {
-  // gameseries: 'Yoshi\'s Woolly World',
-  // character: 'Yoshi',
-  // character: 'Mario',
-  gameseries: 'Super Mario',
-  character: 'Luigi',
-};
+import AmiiboApi from '../../API/AmiiboApi';
+import styles from './App.module.css';
+import LikesPage from '../LikesPage/LikesPage';
+
+/**
+ * @param {Amiibo} amiibo
+ * @return {string}
+ */
+const getAmiiboId = (amiibo) => amiibo.head + amiibo.tail;
 
 const appState = {
   amiibos: [],
   gameseries: [],
   characters: [],
-  activeParams,
   amiiboApi: new AmiiboApi(),
+  likedAmiibosIds: [],
   likedAmiibos: [],
+  getAmiiboId,
 };
 
 /**
@@ -43,33 +45,20 @@ const handleAmiibosRes = (amiibosRes) => (amiibosRes ? amiibosRes.map((r) => new
  * @param {?Object[]} amiibosAttr
  * @return {string[]}
  */
-const handleAmiiboAttr = (amiibosAttr) => [...new Set(amiibosAttr ? amiibosAttr.map((g) => g.name) : [])];
+const handleAmiiboAttr = (amiibosAttr) => [null, ...new Set(amiibosAttr ? amiibosAttr.map((g) => g.name) : [])];
 
 const reducer = (state, action) => {
   switch (action.type) {
     case CHANGE_AMIIBOS:
       return { ...state, amiibos: handleAmiibosRes(action.amiibosRes) };
-    case CHANGE_ACTIVE_GAMESERIES:
-      return (
-        {
-          ...state,
-          activeParams: Object.assign(state.activeParams, {
-            gameseries: action.activeGameseries,
-          }),
-        });
-    case CHANGE_ACTIVE_CHARACTER:
-      return {
-        ...state,
-        activeParams: Object.assign(state.activeParams, {
-          character: action.activeCharacter,
-        }),
-      };
+    case CHANGE_LIKED_AMIIBOS:
+      return { ...state, likedAmiibos: handleAmiibosRes(action.amiibosRes) };
     case CHANGE_GAMESERIES:
-      return ({ ...state, gameseries: handleAmiiboAttr(action.gameseries) });
+      return { ...state, gameseries: handleAmiiboAttr(action.gameseries) };
     case CHANGE_CHARACTERS:
-      return ({ ...state, characters: handleAmiiboAttr(action.characters) });
+      return { ...state, characters: handleAmiiboAttr(action.characters) };
     case TOGGLE_LIKE:
-      return ({ ...state, likedAmiibos: toggleArrayElement(action.amiibo, state.likedAmiibos) });
+      return { ...state, likedAmiibosIds: toggleArrayElement(getAmiiboId(action.amiibo), [...state.likedAmiibosIds]) };
     default:
       return 'Error';
   }
@@ -80,9 +69,18 @@ function App() {
 
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>
-      <div className={styles.app}>
-        <MainPage />
-      </div>
+      <Router>
+        <div className={styles.app}>
+          <Switch>
+            <Route path="/likes">
+              <LikesPage />
+            </Route>
+            <Route path="/">
+              <MainPage />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     </AppContext.Provider>
   );
 }

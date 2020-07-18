@@ -1,5 +1,12 @@
 https://www.amiiboapi.com/
 
+E.g.
+Head only: /api/amiibo/?head=01010000
+Tail only: /api/amiibo/?tail=000e0002
+Head + Tail: /api/amiibo/?id=01010000000e0002
+https://www.amiiboapi.com/api/amiibo/?id=01010000000e0002&id=0000000000340102&id=0000000000000002
+
+
 1) следить за асинхронностью вызовов
 2) следить за тем чтобы бизнес-логика была только в редюсере 
 3) делать как можно меньше умных компонентов и как можно больше глупых

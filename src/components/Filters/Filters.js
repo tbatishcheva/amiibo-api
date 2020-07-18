@@ -6,30 +6,34 @@ import {
   CHANGE_ACTIVE_GAMESERIES,
   CHANGE_ACTIVE_CHARACTER,
 } from '../../constants/actionTypes';
+import FilterContext from '../../contexts/FilterContext';
 
 function Filters() {
   const {
-    gameseries,
-    dispatch,
-    characters,
     activeParams,
+    filterDispatch,
+  } = useContext(FilterContext);
+
+  const {
+    gameseries,
+    characters,
   } = useContext(AppContext);
 
   const handleSelectGameseriesChange = useCallback((e) => {
-    dispatch({
+    filterDispatch({
       type: CHANGE_ACTIVE_GAMESERIES,
       activeGameseries: e.currentTarget.value,
     });
   },
-  [dispatch]);
+  [filterDispatch]);
 
   const handleSelectCharactersChange = useCallback((e) => {
-    dispatch({
+    filterDispatch({
       type: CHANGE_ACTIVE_CHARACTER,
       activeCharacter: e.currentTarget.value,
     });
   },
-  [dispatch]);
+  [filterDispatch]);
 
   return (
     <div className={styles.filters}>

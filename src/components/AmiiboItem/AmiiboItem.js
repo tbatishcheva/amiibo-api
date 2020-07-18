@@ -1,9 +1,9 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from '../../contexts/AppContext';
 import Amiibo from '../../models/Amiibo';
 import styles from './AmiiboItem.module.css';
-import Button from '../Button/Button';
+import Button, { NEUTRAL, RED } from '../Button/Button';
 import { TOGGLE_LIKE } from '../../constants/actionTypes';
 
 AmiiboItem.propTypes = {
@@ -11,7 +11,7 @@ AmiiboItem.propTypes = {
 };
 
 function AmiiboItem({ amiibo }) {
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, likedAmiibosIds, getAmiiboId } = useContext(AppContext);
 
   const handleOnLikeClick = useCallback(() => {
     dispatch({
@@ -19,6 +19,12 @@ function AmiiboItem({ amiibo }) {
       amiibo,
     });
   }, [dispatch, amiibo]);
+
+  const isLiked = useMemo(() => {
+    const amiiboId = getAmiiboId(amiibo);
+
+    return !!likedAmiibosIds.includes(amiiboId);
+  }, [amiibo, likedAmiibosIds, getAmiiboId]);
 
   return (
     <div className={styles.amiiboItem}>
@@ -46,7 +52,7 @@ function AmiiboItem({ amiibo }) {
           Tail: {amiibo.tail}
         </div>
         <div className={styles.controls}>
-          <Button onClick={handleOnLikeClick}>Like</Button>
+          <Button onClick={handleOnLikeClick} color={isLiked ? RED : NEUTRAL}>Like</Button>
         </div>
         {/* {amiibo.release} +*/}
       </div>

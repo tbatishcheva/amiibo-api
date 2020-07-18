@@ -6,30 +6,28 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func,
-  selected: PropTypes.string.isRequired,
+  selected: PropTypes.string,
   className: PropTypes.string,
 };
 
 Select.defaultProps = {
   options: null,
   onChange: null,
+  selected: '',
   className: '',
 };
 
 function Select({
   title, options, onChange, selected, className,
 }) {
-  if (!options || options.length === 0) {
-    return null;
-  }
-
   return (
     <>
       {title}
       <select
+        disabled={!options || options.length === 0}
         className={`${styles.select} ${className}`}
         onChange={onChange}
-        value={selected}
+        value={selected || ''}
       >
         {options.map((o) => (
           <option

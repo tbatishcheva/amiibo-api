@@ -1,13 +1,11 @@
 .mainPage {
 }
 
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    font-size: 42px;
-    font-weight: 600;
-    background-color: #263238;
-    color: white;
+.link {
+    color: currentColor;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
 }

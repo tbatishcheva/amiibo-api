@@ -1,19 +1,56 @@
-import React, { useCallback, useContext, useEffect } from 'react';
-import styles from './MainPage.module.css';
+import React, {
+  useCallback, useContext, useEffect, useReducer,
+} from 'react';
+import FilterContext from '../../contexts/FilterContext';
 import AppContext from '../../contexts/AppContext';
 import {
   CHANGE_AMIIBOS,
   CHANGE_GAMESERIES,
-  CHANGE_CHARACTERS,
+  CHANGE_CHARACTERS, CHANGE_ACTIVE_GAMESERIES, CHANGE_ACTIVE_CHARACTER,
 } from '../../constants/actionTypes';
 import AmiiboList from '../AmiiboList/AmiiboList';
 import Filters from '../Filters/Filters';
+import Header from '../Header/Header';
+import styles from './MainPage.module.css';
+
+const activeParams = {
+  gameseries: null,
+  character: null,
+};
+
+const filterState = {
+  activeParams,
+};
+
+const filterReducer = (state, action) => {
+  switch (action.type) {
+    case CHANGE_ACTIVE_GAMESERIES:
+      return {
+        ...state,
+        activeParams: {
+          ...state.activeParams,
+          gameseries: action.activeGameseries,
+        },
+      };
+    case CHANGE_ACTIVE_CHARACTER:
+      return {
+        ...state,
+        activeParams: {
+          ...state.activeParams,
+          character: action.activeCharacter,
+        },
+      };
+    default:
+      return 'Error';
+  }
+};
 
 function MainPage() {
+  const [state, filterDispatch] = useReducer(filterReducer, filterState);
+
   const {
     amiibos,
     dispatch,
-    activeParams,
     amiiboApi,
   } = useContext(AppContext);
 
@@ -42,15 +79,17 @@ function MainPage() {
   [dispatch]);
 
   useEffect(() => {
-    const activeKeys = Object.keys(activeParams);
-    const params = activeKeys.map((ak) => `${ak}=${activeParams[ak]}`).join('&');
+    const activeKeys = Object.keys(state.activeParams);
+    const params = activeKeys.map((ak) => (state.activeParams[ak] ? `${ak}=${state.activeParams[ak]}` : '')).join('&');
     amiiboApi.fetchAmiibosByParams(params).then((res) => changeAmiibos(res.amiibo));
-  }, [amiiboApi, activeParams, changeAmiibos]);
+  }, [amiiboApi, state, changeAmiibos]);
+
   useEffect(() => {
     amiiboApi.fetchGameSeries().then((res) => {
       changeGameseries(res.amiibo);
     });
   }, [amiiboApi, changeGameseries]);
+
   useEffect(
     () => {
       amiiboApi.fetchCharacters().then((res) => {
@@ -61,13 +100,14 @@ function MainPage() {
   );
 
   return (
-    <div className={styles.mainPage}>
-      <header className={styles.header}>
-        Amiibos
-      </header>
-      <Filters />
-      <AmiiboList amiibos={amiibos} />
-    </div>
+    <FilterContext.Provider value={{ ...state, filterDispatch }}>
+      <div className={styles.mainPage}>
+        <Header />
+        <Filters />
+        {(!amiibos || amiibos.length === 0) && <div>Loader</div>}
+        <AmiiboList amiibos={amiibos} />
+      </div>
+    </FilterContext.Provider>
   );
 }
 
