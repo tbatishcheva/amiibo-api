@@ -18,6 +18,7 @@ import AppContext from '../../contexts/AppContext';
 import AmiiboApi from '../../API/AmiiboApi';
 import styles from './App.module.css';
 import LikesPage from '../LikesPage/LikesPage';
+import AmiiboPage from '../AmiiboPage/AmiiboPage';
 
 /**
  * @param {Amiibo} amiibo
@@ -31,7 +32,7 @@ const appState = {
   characters: [],
   amiiboApi: new AmiiboApi(),
   likedAmiibosIds: [],
-  likedAmiibos: [],
+  likedAmiibos: null,
   getAmiiboId,
 };
 
@@ -39,13 +40,15 @@ const appState = {
  * @param {?Object[]}amiibosRes
  * @return {Amiibo[]}
  */
-const handleAmiibosRes = (amiibosRes) => (amiibosRes ? amiibosRes.map((r) => new Amiibo(r)) : []);
+const handleAmiibosRes = (amiibosRes) => (amiibosRes
+  ? amiibosRes.map((r) => new Amiibo(r)) : []);
 
 /**
  * @param {?Object[]} amiibosAttr
  * @return {string[]}
  */
-const handleAmiiboAttr = (amiibosAttr) => [null, ...new Set(amiibosAttr ? amiibosAttr.map((g) => g.name) : [])];
+const handleAmiiboAttr = (amiibosAttr) => [null,
+  ...new Set(amiibosAttr ? amiibosAttr.map((g) => g.name) : [])];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -58,7 +61,10 @@ const reducer = (state, action) => {
     case CHANGE_CHARACTERS:
       return { ...state, characters: handleAmiiboAttr(action.characters) };
     case TOGGLE_LIKE:
-      return { ...state, likedAmiibosIds: toggleArrayElement(getAmiiboId(action.amiibo), [...state.likedAmiibosIds]) };
+      return {
+        ...state,
+        likedAmiibosIds: toggleArrayElement(getAmiiboId(action.amiibo), [...state.likedAmiibosIds]),
+      };
     default:
       return 'Error';
   }
@@ -72,6 +78,9 @@ function App() {
       <Router>
         <div className={styles.app}>
           <Switch>
+            <Route path="/amiibo/:id">
+              <AmiiboPage />
+            </Route>
             <Route path="/likes">
               <LikesPage />
             </Route>

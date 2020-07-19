@@ -66,3 +66,12 @@
     flex-direction: column;
     justify-content: flex-end;
 }
+
+.link {
+    color: currentColor;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

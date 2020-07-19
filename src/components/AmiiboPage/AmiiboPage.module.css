@@ -1,0 +1,52 @@
+.amiiboPage {
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 56px;
+    font-weight: 500;
+    padding: 0 0 20px 0;
+}
+
+.description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 200px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    margin: 0 0 16px 0;
+}
+
+.item:last-child {
+    margin: 0;
+}
+
+.image {
+}

@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import AppContext from '../../contexts/AppContext';
 import Amiibo from '../../models/Amiibo';
 import styles from './AmiiboItem.module.css';
@@ -28,13 +29,16 @@ function AmiiboItem({ amiibo }) {
 
   return (
     <div className={styles.amiiboItem}>
-      <div className={styles.img}>
-        <img alt="Amiibo" src={amiibo.image} />
-
+      <div>
+        <Link className={styles.img} to={`/amiibo/${getAmiiboId(amiibo)}`}>
+          <img alt="Amiibo" src={amiibo.image} />
+        </Link>
       </div>
       <div className={styles.content}>
         <div className={styles.character}>
-          {amiibo.character}
+          <Link className={styles.link} to={`/amiibo/${getAmiiboId(amiibo)}`}>
+            {amiibo.character}
+          </Link>
         </div>
         <div className={styles.name}>
           {amiibo.name}

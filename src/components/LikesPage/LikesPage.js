@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import styles from './LikesPage.module.css';
 import AppContext from '../../contexts/AppContext';
 import { CHANGE_LIKED_AMIIBOS } from '../../constants/actionTypes';
+import Loader from '../Loader/Loader';
 
 function LikesPage() {
   const {
@@ -27,7 +28,9 @@ function LikesPage() {
   return (
     <div className={styles.likesPage}>
       <Header />
-      <AmiiboList amiibos={likedAmiibos} />
+      {!likedAmiibos && <Loader />}
+      {likedAmiibos && likedAmiibos.length === 0 && <div>No Likes</div>}
+      {likedAmiibos && likedAmiibos.length > 0 && <AmiiboList amiibos={likedAmiibos} />}
     </div>
   );
 }

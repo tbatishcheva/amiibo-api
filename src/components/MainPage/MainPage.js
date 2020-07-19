@@ -12,6 +12,7 @@ import AmiiboList from '../AmiiboList/AmiiboList';
 import Filters from '../Filters/Filters';
 import Header from '../Header/Header';
 import styles from './MainPage.module.css';
+import Loader from '../Loader/Loader';
 
 const activeParams = {
   gameseries: null,
@@ -80,7 +81,8 @@ function MainPage() {
 
   useEffect(() => {
     const activeKeys = Object.keys(state.activeParams);
-    const params = activeKeys.map((ak) => (state.activeParams[ak] ? `${ak}=${state.activeParams[ak]}` : '')).join('&');
+    const params = activeKeys
+      .map((ak) => (state.activeParams[ak] ? `${ak}=${state.activeParams[ak]}` : '')).join('&');
     amiiboApi.fetchAmiibosByParams(params).then((res) => changeAmiibos(res.amiibo));
   }, [amiiboApi, state, changeAmiibos]);
 
@@ -104,7 +106,9 @@ function MainPage() {
       <div className={styles.mainPage}>
         <Header />
         <Filters />
-        {(!amiibos || amiibos.length === 0) && <div>Loader</div>}
+        {(!amiibos || amiibos.length === 0) && (
+        <Loader />
+        )}
         <AmiiboList amiibos={amiibos} />
       </div>
     </FilterContext.Provider>
