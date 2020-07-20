@@ -1,0 +1,31 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    position: sticky;
+    top: 100px;
+    background-color: #e5e5e5;
+}
+
+@media (min-width: 576px) {
+    .filters {
+        flex-direction: row;
+    }
+}
+
+.select {
+    margin: 20px 0 0 0 !important;
+}
+
+.select:first-child {
+    margin: 0 !important;
+}
+
+@media (min-width: 576px) {
+    .select {
+        margin: 0 0 0 20px !important;
+    }
+}
+

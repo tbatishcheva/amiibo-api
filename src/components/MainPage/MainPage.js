@@ -9,7 +9,7 @@ import {
   CHANGE_CHARACTERS, CHANGE_ACTIVE_GAMESERIES, CHANGE_ACTIVE_CHARACTER,
 } from '../../constants/actionTypes';
 import AmiiboList from '../AmiiboList/AmiiboList';
-import Filters from '../Filters/Filters';
+import Filters from './Filters/Filters';
 import Header from '../Header/Header';
 import styles from './MainPage.module.css';
 import Loader from '../Loader/Loader';
@@ -107,7 +107,7 @@ function MainPage() {
         <Header />
         <Filters />
         {(!amiibos || amiibos.length === 0) && (
-        <Loader />
+        <div className={styles.loader}><Loader /></div>
         )}
         <AmiiboList amiibos={amiibos} />
       </div>

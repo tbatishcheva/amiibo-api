@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 import styles from './AmiiboPage.module.css';
 import Header from '../Header/Header';
 import AppContext from '../../contexts/AppContext';
@@ -18,6 +19,7 @@ function AmiiboPage() {
   return (
     <div className={styles.amiiboPage}>
       <Header />
+      {!amiibo && <div className={styles.loader}><Loader /></div>}
       {amiibo && (
       <div className={styles.content}>
         <div className={styles.main}>

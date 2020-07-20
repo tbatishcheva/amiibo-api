@@ -1,12 +1,12 @@
 import React, { useCallback, useContext } from 'react';
 import styles from './Filters.module.css';
-import Select from '../Select/Select';
-import AppContext from '../../contexts/AppContext';
+import Select from '../../Select/Select';
+import AppContext from '../../../contexts/AppContext';
 import {
   CHANGE_ACTIVE_GAMESERIES,
   CHANGE_ACTIVE_CHARACTER,
-} from '../../constants/actionTypes';
-import FilterContext from '../../contexts/FilterContext';
+} from '../../../constants/actionTypes';
+import FilterContext from '../../../contexts/FilterContext';
 
 function Filters() {
   const {

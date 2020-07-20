@@ -21,11 +21,11 @@ function Select({
   title, options, onChange, selected, className,
 }) {
   return (
-    <>
-      {title}
+    <div className={className}>
+      <div className={styles.title}>{title}</div>
       <select
         disabled={!options || options.length === 0}
-        className={`${styles.select} ${className}`}
+        className={styles.select}
         onChange={onChange}
         value={selected || ''}
       >
@@ -38,7 +38,7 @@ function Select({
           </option>
         ))}
       </select>
-    </>
+    </div>
   );
 }
 
