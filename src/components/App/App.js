@@ -4,10 +4,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import handleAmiibosRes from '../../helpers/handleAmiibosRes';
 import {
-  CHANGE_AMIIBOS, CHANGE_CHARACTERS,
-  CHANGE_GAMESERIES,
   TOGGLE_LIKE,
 } from '../../constants/actionTypes';
 import toggleArrayElement from '../../helpers/toggleArrayElement';
@@ -26,29 +23,13 @@ import AmiiboPage from '../AmiiboPage/AmiiboPage';
 const getAmiiboId = (amiibo) => amiibo.head + amiibo.tail;
 
 const appState = {
-  amiibos: [],
-  gameseries: [],
-  characters: [],
   amiiboApi: new AmiiboApi(),
   likedAmiibosIds: [],
   getAmiiboId,
 };
 
-/**
- * @param {?Object[]} amiibosAttr
- * @return {string[]}
- */
-const handleAmiiboAttr = (amiibosAttr) => [null,
-  ...new Set(amiibosAttr ? amiibosAttr.map((g) => g.name) : [])];
-
 const reducer = (state, action) => {
   switch (action.type) {
-    case CHANGE_AMIIBOS:
-      return { ...state, amiibos: handleAmiibosRes(action.amiibosRes) };
-    case CHANGE_GAMESERIES:
-      return { ...state, gameseries: handleAmiiboAttr(action.gameseries) };
-    case CHANGE_CHARACTERS:
-      return { ...state, characters: handleAmiiboAttr(action.characters) };
     case TOGGLE_LIKE:
       return {
         ...state,

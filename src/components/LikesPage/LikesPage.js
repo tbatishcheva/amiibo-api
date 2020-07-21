@@ -25,9 +25,7 @@ const likesReducer = (state, action) => {
 function LikesPage() {
   const [state, likesDispatch] = useReducer(likesReducer, likesState);
 
-  const {
-    dispatch, likedAmiibosIds, amiiboApi,
-  } = useContext(AppContext);
+  const { likedAmiibosIds, amiiboApi } = useContext(AppContext);
 
   const changeLikedAmiibos = useCallback((amiibosRes) => {
     likesDispatch({
@@ -35,7 +33,7 @@ function LikesPage() {
       amiibosRes,
     });
   },
-  [dispatch]);
+  [likesDispatch]);
 
   useEffect(() => {
     amiiboApi.fetchAmiibosByIds(likedAmiibosIds).then((res) => {

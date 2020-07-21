@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Loader.module.css';
 
-function Loader() {
+Loader.propTypes = {
+  className: PropTypes.string,
+};
+
+Loader.defaultProps = {
+  className: '',
+};
+
+function Loader({ className }) {
   return (
-    <div className={styles.loader}>
+    <div className={`${styles.loader} ${className}`}>
       <svg
         className={styles.spinner}
         viewBox="0 0 66 66"
