@@ -51,7 +51,7 @@ const mainPageReducer = (state, action) => {
 function MainPage() {
   const [state, mainPageDispatch] = useReducer(mainPageReducer, mainPageState);
 
-  const { amiiboApi } = useContext(AppContext);
+  const { amiiboApi, dispatch } = useContext(AppContext);
 
   // todo add useRef for const amiiboApi = new AmiiboApi();
 
@@ -66,7 +66,8 @@ function MainPage() {
   useEffect(() => {
     const activeKeys = Object.keys(state.activeParams);
     const params = activeKeys
-      .map((ak) => (state.activeParams[ak] ? `${ak}=${state.activeParams[ak]}` : '')).join('&');
+      .map((ak) => (state.activeParams[ak] ? `${ak}=${state.activeParams[ak]}` : ''))
+      .join('&');
     amiiboApi.fetchAmiibosByParams(params).then((res) => changeAmiibos(res.amiibo));
   }, [amiiboApi, state.activeParams, changeAmiibos]);
 

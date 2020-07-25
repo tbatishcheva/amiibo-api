@@ -1,10 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
 import {
+  SET_LIKE,
   TOGGLE_LIKE,
 } from '../../constants/actionTypes';
 import toggleArrayElement from '../../helpers/toggleArrayElement';
@@ -31,9 +32,22 @@ const appState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case TOGGLE_LIKE:
+      // eslint-disable-next-line no-case-declarations
+      const newLikedAmiibosIds = toggleArrayElement(
+        getAmiiboId(action.amiibo), [...state.likedAmiibosIds],
+      );
+      window.localStorage.clear();
+      window.localStorage.setItem('likedAmiibosIds', JSON.stringify(newLikedAmiibosIds));
       return {
         ...state,
-        likedAmiibosIds: toggleArrayElement(getAmiiboId(action.amiibo), [...state.likedAmiibosIds]),
+        likedAmiibosIds: newLikedAmiibosIds,
+      };
+    case SET_LIKE:
+      // eslint-disable-next-line no-case-declarations
+      const likedAmiibosIds = window.localStorage.getItem('likedAmiibosIds');
+      return {
+        ...state,
+        likedAmiibosIds: likedAmiibosIds ? JSON.parse(likedAmiibosIds) : [],
       };
     default:
       return 'Error';
@@ -42,6 +56,16 @@ const reducer = (state, action) => {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, appState);
+
+  const updateLikes = useCallback(() => {
+    dispatch({
+      type: SET_LIKE,
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    updateLikes();
+  }, [updateLikes]);
 
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>
